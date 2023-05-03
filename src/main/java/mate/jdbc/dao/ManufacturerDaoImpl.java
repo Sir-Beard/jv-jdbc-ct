@@ -15,13 +15,6 @@ import mate.jdbc.dao.interfaces.ManufacturerDao;
 public class ManufacturerDaoImpl implements ManufacturerDao {
     private Connection connection;
 
-    public ManufacturerDaoImpl() {
-    }
-
-    public ManufacturerDaoImpl(Connection connection) {
-        this.connection = connection;
-    }
-
     @Override
     public Manufacturer create(Manufacturer manufacturer) {
         connection = ConnectionUtil.getConnection();
@@ -33,18 +26,19 @@ public class ManufacturerDaoImpl implements ManufacturerDao {
             statement.executeUpdate();
             ResultSet resultSet = statement.getGeneratedKeys();
             if (resultSet.next()) {
-                Long instertedId = resultSet.getLong(1);
-                manufacturer.setId(instertedId);
+                Long insertedId = resultSet.getLong(1);
+                manufacturer.setId(insertedId);
             }
             manufacturer.setDeleted(false);
             connection.close();
         } catch (SQLException e) {
-            throw new DataProcessingException("error in create method", e);
+            throw new DataProcessingException("error in create method "
+                    + manufacturer.getName()
+                    + " and "
+                    + manufacturer.getCountry(), e);
         }
         return manufacturer;
     }
-    // створити приватний метод який буде перевіряти чи є таким самий запис в базі даних
-    // типу sql запит: селект * фром бд WHERE name='BMW';
 
     @Override
     public Optional<Manufacturer> get(Long id) throws SQLException {
@@ -65,10 +59,9 @@ public class ManufacturerDaoImpl implements ManufacturerDao {
                     return Optional.empty();
                 }
             } catch (SQLException e) {
-                throw new DataProcessingException("error in get method", e);
+                throw new DataProcessingException("error in get method " + id, e);
             }
         }
-        //return Optional.ofNullable(null); // SQL query, resultSet, parse into java object
     }
 
     @Override
@@ -109,21 +102,26 @@ public class ManufacturerDaoImpl implements ManufacturerDao {
                 throw new RuntimeException("Failed to update manufacturer");
             }
         } catch (SQLException e) {
-            throw new DataProcessingException("error in update method", e);
+            throw new DataProcessingException("error in update method "
+                    + manufacturer.getId()
+                    + " and "
+                    + manufacturer.getName()
+                    + " and "
+                    + manufacturer.getCountry(), e);
         }
     }
 
     @Override
     public boolean delete(Long id) {
         connection = ConnectionUtil.getConnection();
-        String quetyDelete = "UPDATE manufacturers SET `is_deleted` = 'true' WHERE id = ?";
-        try (PreparedStatement statement = connection.prepareStatement(quetyDelete)) {
+        String queryDelete = "UPDATE manufacturers SET `is_deleted` = 'true' WHERE id = ?";
+        try (PreparedStatement statement = connection.prepareStatement(queryDelete)) {
             statement.setLong(1, id);
             int rowsDeleted = statement.executeUpdate();
             connection.close();
             return rowsDeleted > 0;
         } catch (SQLException e) {
-            throw new DataProcessingException("error in delete method", e);
+            throw new DataProcessingException("error in delete method " + id, e);
         }
     }
 }

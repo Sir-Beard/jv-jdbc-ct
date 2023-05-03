@@ -10,7 +10,6 @@ public class ConnectionUtil {
     private static String password = "password2023";
 
     private ConnectionUtil() {
-
     }
 
     public static Connection getConnection() {
