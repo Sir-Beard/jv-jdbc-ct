@@ -1,9 +1,9 @@
-create table manufacturers
+CREATE TABLE manufacturers
 (
-    id         bigint auto_increment
-        primary key,
-    name       varchar(45) not null,
-    country    varchar(45) not null,
-    is_deleted tinyint     NOT NULL DEFAULT 0
+    id         BIGINT AUTO_INCREMENT
+        PRIMARY KEY,
+    name       VARCHAR(45) NOT NULL,
+    country    VARCHAR(45) NOT NULL,
+    is_deleted TINYINT     NOT NULL DEFAULT 0
 )
-    comment 'List of car makers.';
+    COMMENT 'List of car makers.';

@@ -4,18 +4,12 @@ public class Manufacturer {
     private Long id;
     private String name;
     private String country;
-    private boolean isDeleted;
+    private Boolean isDeleted;
 
     public Manufacturer() {
     }
 
-    public Manufacturer(Long id, String name, String country) {
-        this.id = id;
-        this.name = name;
-        this.country = country;
-    }
-
-    public Manufacturer(Long id, String name, String country, boolean isDeleted) {
+    public Manufacturer(Long id, String name, String country, Boolean isDeleted) {
         this.id = id;
         this.name = name;
         this.country = country;
@@ -46,11 +40,11 @@ public class Manufacturer {
         return country;
     }
 
-    public void setDeleted(boolean deleted) {
+    public void setDeleted(Boolean deleted) {
         isDeleted = deleted;
     }
 
-    public boolean isDeleted() {
+    public Boolean isDeleted() {
         return isDeleted;
     }
 
