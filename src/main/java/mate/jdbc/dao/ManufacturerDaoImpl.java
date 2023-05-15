@@ -135,7 +135,7 @@ public class ManufacturerDaoImpl implements ManufacturerDao {
     }
 
     private Manufacturer getManufacturer(ResultSet resultSet) throws SQLException {
-        Long id = resultSet.getLong("id");
+        Long id = resultSet.getObject("id", Long.class);
         String name = resultSet.getString("name");
         String country = resultSet.getString("country");
         Boolean isDeleted = resultSet.getBoolean("is_deleted");
