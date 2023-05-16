@@ -14,17 +14,17 @@ public class Main {
         Manufacturer manufacturer = new Manufacturer();
 
         //CREATE
-//        manufacturer.setName("Rimac");
-//        manufacturer.setCountry("Croatia");
-//        manufacturerDao.create(manufacturer);
-//        System.out.println(manufacturer);
+        manufacturer.setName("Rimac");
+        manufacturer.setCountry("Croatia");
+        manufacturerDao.create(manufacturer);
+        System.out.println(manufacturer);
 
         //UPDATE
-//        manufacturer.setId(10L);
-//        manufacturer.setName("Zenvo");
-//        manufacturer.setCountry("Denmark");
-//        manufacturerDao.update(manufacturer);
-//        System.out.println(manufacturer);
+        manufacturer.setId(11L);
+        manufacturer.setName("Rimac");
+        manufacturer.setCountry("Croatia");
+        manufacturerDao.update(manufacturer);
+        System.out.println(manufacturer);
 
         //GET ALL
         List<Manufacturer> manufacturerList = manufacturerDao.getAll();
@@ -37,6 +37,6 @@ public class Main {
         System.out.println(manufacturerDao.get(4L));
 
         //DELETE
-//        manufacturerDao.delete(5L);
+        manufacturerDao.delete(5L);
     }
 }

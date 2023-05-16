@@ -33,7 +33,7 @@ public class ManufacturerDaoImpl implements ManufacturerDao {
             statement.executeUpdate();
             ResultSet resultSet = statement.getGeneratedKeys();
             if (resultSet.next()) {
-                Long insertedId = resultSet.getLong(1);
+                Long insertedId = resultSet.getObject(1, Long.class);
                 manufacturer.setId(insertedId);
             }
             manufacturer.setDeleted(false);
@@ -56,12 +56,11 @@ public class ManufacturerDaoImpl implements ManufacturerDao {
         ) {
             statement.setLong(1, id);
             ResultSet resultSet = statement.executeQuery();
+            Manufacturer manufacturer = new Manufacturer();
             if (resultSet.next()) {
-                Manufacturer manufacturer = getManufacturer(resultSet);
-                return Optional.ofNullable(manufacturer);
-            } else {
-                return Optional.empty();
+                manufacturer = getManufacturer(resultSet);
             }
+            return Optional.ofNullable(manufacturer);
         } catch (SQLException e) {
             throw new DataProcessingException("Can't get manufacturer, id = "
                     + id, e);
@@ -93,7 +92,8 @@ public class ManufacturerDaoImpl implements ManufacturerDao {
     @Override
     public Manufacturer update(Manufacturer manufacturer) {
         String queryUpdate
-                = "UPDATE manufacturers SET name = ?, country = ? WHERE id = ?  AND is_deleted = FALSE";
+                = "UPDATE manufacturers SET name = ?, country = ? "
+                + "WHERE id = ?  AND is_deleted = FALSE";
         try (
                 Connection connection
                         = ConnectionUtil.getConnection();
